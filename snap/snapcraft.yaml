@@ -1,0 +1,37 @@
+name: dotnet7-demo-snap
+version: '1.0.0'
+grade: devel
+summary: .NET 7 Demo Snap
+description: |
+ A Snap packaging demonstartion that packages a simple .NET 7 hello world
+ application.
+license: MIT
+contact: dominik.viererbe@canonical.com
+issues: https://github.com/dviererbe/dotnet7-demo-snap/issues
+source-code: https://github.com/dviererbe/dotnet7-demo-snap
+
+base: core22
+architectures:
+  - build-on: amd64
+  - build-on: arm64
+
+confinement: strict
+
+parts:
+  cli:
+    plugin: dotnet
+    dotnet-build-configuration: Release
+    dotnet-self-contained-runtime-identifier: linux-x64
+    source: src
+    build-packages:
+      - dotnet-sdk-7.0
+    stage-packages:
+      - libicu70
+
+apps:
+  dotnet7-demo-snap:
+    command: Hello
+
+lint:
+  ignore:
+    - library
